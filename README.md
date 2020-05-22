@@ -38,7 +38,7 @@ In the "script" directory, there is a file called `process.py` which will genera
 
 `python process.py`
 
-5. Voilà! You will find a CSV file called `frictionless-data-repos` in the same directory
+5. Voilà! You will find a CSV file called `repos-metrics.csv` in a new directory called `data`.
 
 ## Troubleshooting requirements install
 
