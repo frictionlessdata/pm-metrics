@@ -41,6 +41,16 @@ def get_clones(slug):
 	result = json.loads(link)
 	return result['count'] 
 
+def get_watchers(slug):
+	"""Get the statistical results on the analytical endpoint.
+	the total number of clones
+	"""
+	link = f'https://api.github.com/repos/frictionlessdata/{slug}?access_token={github_token}'
+
+	link = urlopen(link).read()
+	result = json.loads(link)
+	return result['subscribers_count'] 
+
 def title_clean(title):
 	"""Beautify the title :)"""
 	title = title.replace('-',' ')
@@ -57,7 +67,7 @@ for repo_name in repo_names:
 	url = repo_name.homepage
 	types = "Repo"
 	stars = repo_name.stargazers_count
-	watchers = repo_name.subscribers_count
+	watchers = get_watchers(slug)
 	open_issues = repo_name.open_issues_count
 	view_count = get_view_count(slug, 'count')
 	unique_count = get_view_count(slug, 'uniques')
@@ -80,7 +90,7 @@ for repo_name in repo_names:
 	list_of_new_data.append(new_data)
 
 # Create a CSV file 
-with open('../data/repos-metrics.csv', 'w') as csvfile:
+with open('repos-metrics.csv', 'w') as csvfile:
 	writer = csv.DictWriter(csvfile, fieldnames=new_data)
 	writer.writeheader()
 	writer.writerows(list_of_new_data)
